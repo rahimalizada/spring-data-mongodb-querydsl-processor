@@ -8,6 +8,30 @@
   <artifactId>spring-data-mongodb-querydsl-processor</artifactId>
   <version>1.0.0</version>
 
+  <name>spring-data-mongodb-querydsl-processor</name>
+  <description>spring-data-mongodb-querydsl-processor</description>
+  <url>https://github.com/rahimalizada/spring-data-mongodb-querydsl-processor</url>
+  <licenses>
+    <license>
+      <name>Apache-2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>rahim.alizada</id>
+      <name>Rahim Alizada</name>
+      <email>rahim.alizada@gmail.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/rahimalizada/spring-data-mongodb-querydsl-processor</connection>
+    <developerConnection>scm:git:https://github.com/rahimalizada/spring-data-mongodb-querydsl-processor</developerConnection>
+    <url>https://github.com/rahimalizada/spring-data-mongodb-querydsl-processor</url>
+  </scm>
+
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
@@ -15,10 +39,15 @@
   </properties>
 
   <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <name>Central Staging Repository OSSRH</name>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
     <repository>
       <id>ossrh</id>
       <name>Central Repository OSSRH</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
 
@@ -37,5 +66,43 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.15</version> <!-- apparently this needs to be exactly this version -->
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
